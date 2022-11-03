@@ -1,0 +1,10 @@
+C:\TEMPURA\RinkuCoppel\obj\Debug\RinkuCoppel.csproj.AssemblyReference.cache
+C:\TEMPURA\RinkuCoppel\obj\Debug\RinkuCoppel.Properties.Resources.resources
+C:\TEMPURA\RinkuCoppel\obj\Debug\RinkuCoppel.csproj.GenerateResource.cache
+C:\TEMPURA\RinkuCoppel\obj\Debug\RinkuCoppel.csproj.CoreCompileInputs.cache
+C:\TEMPURA\RinkuCoppel\bin\Debug\RinkuCoppel.exe.config
+C:\TEMPURA\RinkuCoppel\bin\Debug\RinkuCoppel.exe
+C:\TEMPURA\RinkuCoppel\bin\Debug\RinkuCoppel.pdb
+C:\TEMPURA\RinkuCoppel\obj\Debug\RinkuCoppel.exe
+C:\TEMPURA\RinkuCoppel\obj\Debug\RinkuCoppel.pdb
+C:\TEMPURA\RinkuCoppel\obj\Debug\RinkuCoppel.MenuPrincipal.resources
