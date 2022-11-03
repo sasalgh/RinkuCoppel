@@ -10,7 +10,7 @@ namespace RinkuCoppel.Clase
 {
     class clsConDat
     {
-        public static SqlConnection con = new SqlConnection("server=(localdb)\\MSSQLLocalDB; database=Prueba ; integrated security = true");
+        public static SqlConnection con = new SqlConnection("server=(localdb)\\MSSQLLocalDB; database=RinkuCoppel ; integrated security = true");
 
         //public void conectar()
         //{

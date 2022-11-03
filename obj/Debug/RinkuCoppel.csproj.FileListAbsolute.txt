@@ -8,3 +8,4 @@ C:\TEMPURA\RinkuCoppel\bin\Debug\RinkuCoppel.pdb
 C:\TEMPURA\RinkuCoppel\obj\Debug\RinkuCoppel.exe
 C:\TEMPURA\RinkuCoppel\obj\Debug\RinkuCoppel.pdb
 C:\TEMPURA\RinkuCoppel\obj\Debug\RinkuCoppel.MenuPrincipal.resources
+C:\TEMPURA\RinkuCoppel\obj\Debug\RinkuCoppel.FormEmpleados.resources

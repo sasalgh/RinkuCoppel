@@ -48,7 +48,7 @@ namespace RinkuCoppel
 
         private void button1_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new Form1(), sender);
+            OpenChildForm(new FormEmpleados(), sender);
         }
     }
 }
