@@ -40,6 +40,11 @@ En la carpeta Respaldo_BD se encuentran los siguientes archivos:
 - RinkuCoppel.bak (Archivo de Respaldo de la BD).
 - script_Generar_RinkuCoppel.sql (Script para crear la BD).
 
+### Ejecución del Sistema sin utilizar el IDE
+
+- La BD debe de estar restaurada.
+- Ejecute el archivo "RinkuCoppel.exe" que se encuentra en la carpeta bin\Debug
+
 ### Capturas de Pantalla
 
 En la carpeta Capturas_de_Pantalla se encuentran las capturas del Sistema que muestran las pantallas en funcionamiento, asi como una de la estrucutura de la BD.
