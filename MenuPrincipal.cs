@@ -15,26 +15,15 @@ namespace RinkuCoppel
         public MenuPrincipal()
         {
             InitializeComponent();
-
-
-            
+                        
         }
 
         private void OpenChildForm(Form childForm, object btnSender)
         {
-            if (ActiveForm != null)
-            {
-                
-            }
-
             
-
             if (this.panelContenido.Controls.Count != 0)
                 this.panelContenido.Controls.RemoveAt(0);
 
-            
-            //activeForm = childForm;
-            //ActiveForm = childForm;
             childForm.TopLevel = false;
             childForm.FormBorderStyle = FormBorderStyle.None;
             childForm.Dock = DockStyle.Fill;
@@ -42,8 +31,6 @@ namespace RinkuCoppel
             panelContenido.Tag = childForm;
             childForm.BringToFront();
             childForm.Show();
-            
-            
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -54,6 +41,11 @@ namespace RinkuCoppel
         private void button2_Click(object sender, EventArgs e)
         {
             OpenChildForm(new FormEntregas(), sender);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new FormReporte(), sender);
         }
     }
 }

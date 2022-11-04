@@ -14,11 +14,9 @@ namespace RinkuCoppel
 {
     public partial class FormEntregas : Form
     {
-        SqlCommand SQLComm;
         string NumE;
-        string Mes;
-        int ideMes;
-        int ide = 0;
+        string ide = "";
+        string ideguardar = "";
         public FormEntregas()
         {
             InitializeComponent();
@@ -26,14 +24,17 @@ namespace RinkuCoppel
             llenarMes();
             llenarNumEmp();
             llenargrid();
+
+
+            
         }
 
         private void limpiarcampos()
         {
             txtNomEmp.Text = "";
-            cmbNumEmp.SelectedIndex = 0;
-            cmbRol.SelectedIndex = 0;
-            cmbMes.SelectedIndex = 0;
+            cmbNumEmp.SelectedIndex = -1;
+            cmbRol.SelectedIndex = -1;
+            cmbMes.SelectedIndex = -1;
             txtCantEnt.Text = "";
         }
 
@@ -94,7 +95,7 @@ namespace RinkuCoppel
             DataTable dt = new DataTable();
             using (SqlConnection conn = new SqlConnection(clsConDat.con.ConnectionString))
             {
-                string query = "select NumEmpleado as [Numero de Empleado], NomEmpleado as [Nombre del Empleado], DescRol as Rol, Mes, CantidadEntregas from vwEntregasEmpleados";
+                string query = "select ide, ideEntregas, NumEmpleado as [Numero de Empleado], NomEmpleado as [Nombre del Empleado], DescRol as Rol, Mes, CantidadEntregas from vwEntregasEmpleados";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
 
@@ -104,6 +105,8 @@ namespace RinkuCoppel
 
             dataGridView1.DataSource = dt;
 
+            dataGridView1.Columns[0].Visible = false;
+            dataGridView1.Columns[1].Visible = false;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -129,8 +132,7 @@ namespace RinkuCoppel
 
             foreach (DataRow dato in dt.Rows)
             {
-                ide = (int)dato.ItemArray[0];
-                //txtNumEmp.Text = dato.ItemArray[1].ToString();
+                ideguardar = dato.ItemArray[0].ToString();
                 txtNomEmp.Text = dato.ItemArray[2].ToString();
                 cmbRol.SelectedIndex = (int)dato.ItemArray[3] - 1;
             }
@@ -155,8 +157,9 @@ namespace RinkuCoppel
                         UpdateCommand.CommandType = CommandType.StoredProcedure;
 
                         //UpdateCommand.Parameters.Add("@NumEmpleado", SqlDbType.VarChar, 50).Value = txtNumEmp.Text;
-                        UpdateCommand.Parameters.Add("@NomEmpleado", SqlDbType.VarChar, 100).Value = txtNomEmp.Text;
-                        UpdateCommand.Parameters.Add("@fkCatRol", SqlDbType.Int).Value = cmbRol.SelectedValue;
+                        UpdateCommand.Parameters.Add("@fkEmpleados", SqlDbType.Int).Value = int.Parse(ideguardar);
+                        UpdateCommand.Parameters.Add("@fkMes", SqlDbType.Int).Value = cmbMes.SelectedValue;
+                        UpdateCommand.Parameters.Add("@CantidadEntregas", SqlDbType.Int).Value = txtCantEnt.Text;
                         UpdateCommand.Parameters.Add("@ide", SqlDbType.Int).Value = ide;
                         UpdateCommand.ExecuteNonQuery();
                     }
@@ -172,7 +175,7 @@ namespace RinkuCoppel
                         SqlCommand insertCommand = new SqlCommand("spGraEntrega", conn);
                         insertCommand.CommandType = CommandType.StoredProcedure;
 
-                        insertCommand.Parameters.Add("@fkEmpleados", SqlDbType.Int).Value = ide;
+                        insertCommand.Parameters.Add("@fkEmpleados", SqlDbType.Int).Value = int.Parse(ideguardar);
                         insertCommand.Parameters.Add("@fkMes", SqlDbType.Int).Value = cmbMes.SelectedValue;
                         insertCommand.Parameters.Add("@CantidadEntregas", SqlDbType.Int).Value = txtCantEnt.Text;
 
@@ -194,87 +197,89 @@ namespace RinkuCoppel
             panel1.Visible = false;
         }
 
-        private void buscarMes()
-        {
-            switch (Mes)
-            {
-                case "Enero":
-                    ideMes = 1;
-                    break;
-                case "Febrero":
-                    ideMes = 2;
-                    break;
-                case "Marzo":
-                    ideMes = 3;
-                    break;
-                case "Abril":
-                    ideMes = 4;
-                    break;
-                case "Mayo":
-                    ideMes = 5;
-                    break;
-                case "Junio":
-                    ideMes = 6;
-                    break;
-                case "Julio":
-                    ideMes = 7;
-                    break;
-                case "Agosto":
-                    ideMes = 8;
-                    break;
-                case "Septiembre":
-                    ideMes = 9;
-                    break;
-                case "Octubre":
-                    ideMes = 10;
-                    break;
-                case "Noviembre":
-                    ideMes = 11;
-                    break;
-                case "Diciembre":
-                    ideMes = 12;
-                    break;
-                
-            }
-        }
-
+        
         private void dataGridView1_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
             if (dataGridView1.SelectedRows.Count > 0)
             {
-                NumE = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
-                Mes = dataGridView1.SelectedRows[0].Cells[3].Value.ToString();
+                NumE = dataGridView1.SelectedRows[0].Cells[2].Value.ToString();
+                ide = dataGridView1.SelectedRows[0].Cells[1].Value.ToString();
             }
-
-            buscarMes();
                 
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            panel1.Visible = true;
-            limpiarcampos();
-            lbltitulo.Text = button2.Text;
-            DataTable dt = new DataTable();
-            using (SqlConnection conn = new SqlConnection(clsConDat.con.ConnectionString))
+            if (NumE == null)
+                MessageBox.Show("Seleccione un Registro para Modificar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            else
             {
-                string query = "select * from Empleados where NumEmpleado = '" + NumE + "'";
+                panel1.Visible = true;
+                limpiarcampos();
+                lbltitulo.Text = button2.Text;
+                DataTable dt = new DataTable();
+                using (SqlConnection conn = new SqlConnection(clsConDat.con.ConnectionString))
+                {
+                    string query = "select * from Empleados where NumEmpleado = '" + NumE + "'";
 
-                SqlCommand cmd = new SqlCommand(query, conn);
+                    SqlCommand cmd = new SqlCommand(query, conn);
 
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                da.Fill(dt);
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    da.Fill(dt);
+                }
+
+
+                foreach (DataRow dato in dt.Rows)
+                {                
+                    cmbNumEmp.SelectedIndex = cmbNumEmp.FindStringExact(NumE);
+                    txtNomEmp.Text = dato.ItemArray[2].ToString();
+                    cmbRol.SelectedIndex = (int)dato.ItemArray[3] - 1;
+                
+                }
+
+                using (SqlConnection conn = new SqlConnection(clsConDat.con.ConnectionString))
+                {
+                    string query = "select * from vwEntregasEmpleados where ideEntregas = " + ide;
+
+                    SqlCommand cmd = new SqlCommand(query, conn);
+
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    da.Fill(dt);
+                }
+
+                foreach (DataRow dato in dt.Rows)
+                {
+                    cmbMes.SelectedIndex = cmbMes.FindStringExact(dato.ItemArray[6].ToString());
+                    txtCantEnt.Text = dato.ItemArray[7].ToString();
+                }
             }
+            
+        }
 
+        private void dataGridView1_CellToolTipTextNeeded(object sender, DataGridViewCellToolTipTextNeededEventArgs e)
+        {
+            if ((e.ColumnIndex > -1) && (e.RowIndex > -1))                
+                e.ToolTipText = "Para Modificar un registro dar dos clics en la primer columna del renglón.";
+        }
 
-            foreach (DataRow dato in dt.Rows)
-            {
-                ide = (int)dato.ItemArray[0];
-                //txtNumEmp.Text = dato.ItemArray[1].ToString();
-                txtNomEmp.Text = dato.ItemArray[2].ToString();
-                cmbRol.SelectedIndex = (int)dato.ItemArray[3] - 1;
-            }
+        private void button1_MouseHover(object sender, EventArgs e)
+        {
+            ToolTip ttpict = new ToolTip();
+            ttpict.AutoPopDelay = 10000;
+            ttpict.InitialDelay = 300;
+            ttpict.IsBalloon = true;
+            ttpict.ToolTipIcon = ToolTipIcon.Info;            
+            ttpict.SetToolTip(button1, "Agrega el total de Entregas en un mes del empleado");
+        }
 
+        private void button2_MouseHover(object sender, EventArgs e)
+        {
+            ToolTip ttpict = new ToolTip();
+            ttpict.AutoPopDelay = 10000;
+            ttpict.InitialDelay = 300;
+            ttpict.IsBalloon = true;
+            ttpict.ToolTipIcon = ToolTipIcon.Info;
+            ttpict.SetToolTip(button2, "Modifica la cantidad de Entregas de un mes del empleado");
         }
     }
 }

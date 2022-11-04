@@ -33,6 +33,11 @@ namespace RinkuCoppel
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.button2 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.cmbNumEmp = new System.Windows.Forms.ComboBox();
+            this.txtCantEnt = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.cmbMes = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.lbltitulo = new System.Windows.Forms.Label();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.btnGuardar = new System.Windows.Forms.Button();
@@ -42,11 +47,6 @@ namespace RinkuCoppel
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
-            this.label5 = new System.Windows.Forms.Label();
-            this.cmbMes = new System.Windows.Forms.ComboBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.txtCantEnt = new System.Windows.Forms.TextBox();
-            this.cmbNumEmp = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -65,11 +65,13 @@ namespace RinkuCoppel
             // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.AllowUserToResizeRows = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(70, 63);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(729, 238);
             this.dataGridView1.TabIndex = 2;
+            this.dataGridView1.CellToolTipTextNeeded += new System.Windows.Forms.DataGridViewCellToolTipTextNeededEventHandler(this.dataGridView1_CellToolTipTextNeeded);
             this.dataGridView1.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_RowEnter);
             // 
             // button2
@@ -88,6 +90,7 @@ namespace RinkuCoppel
             this.button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.button2.MouseHover += new System.EventHandler(this.button2_MouseHover);
             // 
             // panel1
             // 
@@ -110,6 +113,50 @@ namespace RinkuCoppel
             this.panel1.Size = new System.Drawing.Size(809, 270);
             this.panel1.TabIndex = 13;
             this.panel1.Visible = false;
+            // 
+            // cmbNumEmp
+            // 
+            this.cmbNumEmp.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbNumEmp.FormattingEnabled = true;
+            this.cmbNumEmp.Location = new System.Drawing.Point(132, 32);
+            this.cmbNumEmp.Name = "cmbNumEmp";
+            this.cmbNumEmp.Size = new System.Drawing.Size(121, 21);
+            this.cmbNumEmp.TabIndex = 13;
+            this.cmbNumEmp.SelectedIndexChanged += new System.EventHandler(this.cmbNumEmp_SelectedIndexChanged);
+            // 
+            // txtCantEnt
+            // 
+            this.txtCantEnt.Location = new System.Drawing.Point(133, 193);
+            this.txtCantEnt.Name = "txtCantEnt";
+            this.txtCantEnt.Size = new System.Drawing.Size(57, 20);
+            this.txtCantEnt.TabIndex = 12;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(14, 200);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(112, 13);
+            this.label6.TabIndex = 11;
+            this.label6.Text = "Cantidad de Entregas:";
+            // 
+            // cmbMes
+            // 
+            this.cmbMes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbMes.FormattingEnabled = true;
+            this.cmbMes.Location = new System.Drawing.Point(133, 155);
+            this.cmbMes.Name = "cmbMes";
+            this.cmbMes.Size = new System.Drawing.Size(121, 21);
+            this.cmbMes.TabIndex = 10;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(96, 164);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(30, 13);
+            this.label5.TabIndex = 9;
+            this.label5.Text = "Mes:";
             // 
             // lbltitulo
             // 
@@ -202,49 +249,7 @@ namespace RinkuCoppel
             this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(96, 164);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(30, 13);
-            this.label5.TabIndex = 9;
-            this.label5.Text = "Mes:";
-            // 
-            // cmbMes
-            // 
-            this.cmbMes.FormattingEnabled = true;
-            this.cmbMes.Location = new System.Drawing.Point(133, 155);
-            this.cmbMes.Name = "cmbMes";
-            this.cmbMes.Size = new System.Drawing.Size(121, 21);
-            this.cmbMes.TabIndex = 10;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(14, 200);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(112, 13);
-            this.label6.TabIndex = 11;
-            this.label6.Text = "Cantidad de Entregas:";
-            // 
-            // txtCantEnt
-            // 
-            this.txtCantEnt.Location = new System.Drawing.Point(133, 193);
-            this.txtCantEnt.Name = "txtCantEnt";
-            this.txtCantEnt.Size = new System.Drawing.Size(57, 20);
-            this.txtCantEnt.TabIndex = 12;
-            // 
-            // cmbNumEmp
-            // 
-            this.cmbNumEmp.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbNumEmp.FormattingEnabled = true;
-            this.cmbNumEmp.Location = new System.Drawing.Point(132, 32);
-            this.cmbNumEmp.Name = "cmbNumEmp";
-            this.cmbNumEmp.Size = new System.Drawing.Size(121, 21);
-            this.cmbNumEmp.TabIndex = 13;
-            this.cmbNumEmp.SelectedIndexChanged += new System.EventHandler(this.cmbNumEmp_SelectedIndexChanged);
+            this.button1.MouseHover += new System.EventHandler(this.button1_MouseHover);
             // 
             // FormEntregas
             // 

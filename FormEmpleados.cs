@@ -14,7 +14,6 @@ namespace RinkuCoppel
 {
     public partial class FormEmpleados : Form
     {
-        SqlCommand SQLComm;        
         string NumE;
         int ide = 0;
         public FormEmpleados()
@@ -33,6 +32,7 @@ namespace RinkuCoppel
 
         private void button1_Click(object sender, EventArgs e)
         {
+            dataGridView1.Enabled = false;
             panel1.Visible = true;
             limpiarcampos();
             lbltitulo.Text = button1.Text;
@@ -43,6 +43,7 @@ namespace RinkuCoppel
         {
             limpiarcampos();
             panel1.Visible = false;
+            dataGridView1.Enabled = true;
         }
 
         private void llenarcatalogo()
@@ -82,6 +83,8 @@ namespace RinkuCoppel
         }
         private void btnGuardar_Click(object sender, EventArgs e)
         {
+            dataGridView1.Enabled = false;
+
             if (cmbRol.Text == "Sin Especificar")
             {
                 MessageBox.Show("Debe de Seleccionar un Rol", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -130,37 +133,45 @@ namespace RinkuCoppel
                 panel1.Visible = false;
 
             }
-            
+
+            dataGridView1.Enabled = true;
+
         }
 
     
         private void button2_Click(object sender, EventArgs e)
         {
-            panel1.Visible = true;
-            limpiarcampos();
-            lbltitulo.Text = button2.Text;
-            DataTable dt = new DataTable();
-            using (SqlConnection conn = new SqlConnection(clsConDat.con.ConnectionString))
+            dataGridView1.Enabled = false;
+
+            if (NumE == null)
+                MessageBox.Show("Seleccione un Registro para Modificar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            else
             {
-                string query = "select * from Empleados where NumEmpleado = '" + NumE + "'";
+                panel1.Visible = true;
+                limpiarcampos();
+                lbltitulo.Text = button2.Text;
+                DataTable dt = new DataTable();
+                using (SqlConnection conn = new SqlConnection(clsConDat.con.ConnectionString))
+                {
+                    string query = "select * from Empleados where NumEmpleado = '" + NumE + "'";
 
-                SqlCommand cmd = new SqlCommand(query, conn);
+                    SqlCommand cmd = new SqlCommand(query, conn);
 
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                da.Fill(dt);
+                    SqlDataAdapter da = new SqlDataAdapter(cmd);
+                    da.Fill(dt);
+                }
+
+
+                foreach (DataRow dato in dt.Rows)
+                {
+                    ide = (int)dato.ItemArray[0];
+                    txtNumEmp.Text = dato.ItemArray[1].ToString();
+                    txtNomEmp.Text = dato.ItemArray[2].ToString();
+                    cmbRol.SelectedIndex = (int)dato.ItemArray[3] - 1;
+                }
             }
+            dataGridView1.Enabled = true;
 
-            
-            foreach(DataRow dato in dt.Rows)
-            {
-                ide = (int)dato.ItemArray[0];
-                txtNumEmp.Text = dato.ItemArray[1].ToString();
-                txtNomEmp.Text = dato.ItemArray[2].ToString();
-                cmbRol.SelectedIndex = (int)dato.ItemArray[3]-1;
-            }
-            
-
-            
         }
 
         private void dataGridView1_RowEnter(object sender, DataGridViewCellEventArgs e)
@@ -168,5 +179,33 @@ namespace RinkuCoppel
             if (dataGridView1.SelectedRows.Count > 0)
                 NumE = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
         }
+
+        private void dataGridView1_CellToolTipTextNeeded(object sender, DataGridViewCellToolTipTextNeededEventArgs e)
+        {
+                if ((e.ColumnIndex > -1) && (e.RowIndex > -1))
+                    e.ToolTipText = "Para Modificar un registro dar dos clics en la primer columna del renglón.";
+        }
+
+        private void button1_MouseHover(object sender, EventArgs e)
+        {
+            ToolTip ttpict = new ToolTip();
+            ttpict.AutoPopDelay = 10000;
+            ttpict.InitialDelay = 300;
+            ttpict.IsBalloon = true;
+            ttpict.ToolTipIcon = ToolTipIcon.Info;
+            ttpict.SetToolTip(button1, "Agrega un nuevo Empleado");
+        }
+
+        private void button2_MouseHover(object sender, EventArgs e)
+        {
+            ToolTip ttpict = new ToolTip();
+            ttpict.AutoPopDelay = 10000;
+            ttpict.InitialDelay = 300;
+            ttpict.IsBalloon = true;
+            ttpict.ToolTipIcon = ToolTipIcon.Info;
+            ttpict.SetToolTip(button2, "Modifica los datos del Empleado");
+        }
+
+        
     }
 }
