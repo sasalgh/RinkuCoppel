@@ -26,6 +26,14 @@ Estas instrucciones le permitirán obtener una copia del proyecto en funcionamie
 - Se requiere Restaurar la BD llamada RinkuCoppel, el archivo de respaldo esta en la carpeta BD.
 - Se requiere tener instalado Visual Studio 2017 o 2019, así como haber compilado y ejecutado el proyecto correspondiente.
 
+### Cadena de Conexión
+
+La cadena de conexión esta en Clase\clsConDat.cs
+"server=(localdb)\\MSSQLLocalDB; database=RinkuCoppel ; integrated security = true"
+
+La BD fue creada en MSSQLLocalDB.
+Si es necesario cambie el nombre del Servidor por el que tenga en uso.
+
 ## Desarrollado con
 
 - Sistema Operativo de desarrollo	    Microsoft Windows 10
