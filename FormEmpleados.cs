@@ -104,6 +104,7 @@ namespace RinkuCoppel
                         UpdateCommand.Parameters.Add("@ide", SqlDbType.Int).Value = ide;
                         UpdateCommand.ExecuteNonQuery();
                     }
+                    MessageBox.Show("Modificación Realizada", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
@@ -121,6 +122,7 @@ namespace RinkuCoppel
                 
                         insertCommand.ExecuteNonQuery();
                     }
+                    MessageBox.Show("Información Guardada", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
                 llenargrid();
