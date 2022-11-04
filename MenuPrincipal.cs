@@ -57,5 +57,10 @@ namespace RinkuCoppel
             //****** Envia el Formulario de la opción para que sea mostrado en el panel derecho
             OpenChildForm(new FormReporte(), sender);
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

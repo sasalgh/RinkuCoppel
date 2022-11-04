@@ -72,14 +72,15 @@ namespace RinkuCoppel
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(12, 106);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(862, 310);
+            this.dataGridView1.Size = new System.Drawing.Size(1047, 310);
             this.dataGridView1.TabIndex = 4;
             // 
             // FormReporte
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(886, 612);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(239)))), ((int)(((byte)(241)))));
+            this.ClientSize = new System.Drawing.Size(1073, 612);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.cmbMes);
             this.Controls.Add(this.label2);
