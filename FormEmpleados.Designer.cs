@@ -33,6 +33,7 @@ namespace RinkuCoppel
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.button1 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.lbltitulo = new System.Windows.Forms.Label();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.btnGuardar = new System.Windows.Forms.Button();
             this.txtNomEmp = new System.Windows.Forms.TextBox();
@@ -65,7 +66,7 @@ namespace RinkuCoppel
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(729, 238);
             this.dataGridView1.TabIndex = 1;
-            this.dataGridView1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dataGridView1_MouseDown);
+            this.dataGridView1.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_RowEnter);
             // 
             // button1
             // 
@@ -87,6 +88,7 @@ namespace RinkuCoppel
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.lbltitulo);
             this.panel1.Controls.Add(this.btnCancelar);
             this.panel1.Controls.Add(this.btnGuardar);
             this.panel1.Controls.Add(this.txtNomEmp);
@@ -97,13 +99,23 @@ namespace RinkuCoppel
             this.panel1.Controls.Add(this.label2);
             this.panel1.Location = new System.Drawing.Point(68, 360);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(729, 235);
+            this.panel1.Size = new System.Drawing.Size(729, 213);
             this.panel1.TabIndex = 10;
             this.panel1.Visible = false;
             // 
+            // lbltitulo
+            // 
+            this.lbltitulo.AutoSize = true;
+            this.lbltitulo.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbltitulo.Location = new System.Drawing.Point(4, 4);
+            this.lbltitulo.Name = "lbltitulo";
+            this.lbltitulo.Size = new System.Drawing.Size(22, 17);
+            this.lbltitulo.TabIndex = 8;
+            this.lbltitulo.Text = "lbl";
+            // 
             // btnCancelar
             // 
-            this.btnCancelar.Location = new System.Drawing.Point(592, 193);
+            this.btnCancelar.Location = new System.Drawing.Point(592, 164);
             this.btnCancelar.Name = "btnCancelar";
             this.btnCancelar.Size = new System.Drawing.Size(75, 23);
             this.btnCancelar.TabIndex = 7;
@@ -113,7 +125,7 @@ namespace RinkuCoppel
             // 
             // btnGuardar
             // 
-            this.btnGuardar.Location = new System.Drawing.Point(490, 193);
+            this.btnGuardar.Location = new System.Drawing.Point(490, 164);
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(75, 23);
             this.btnGuardar.TabIndex = 6;
@@ -123,14 +135,14 @@ namespace RinkuCoppel
             // 
             // txtNomEmp
             // 
-            this.txtNomEmp.Location = new System.Drawing.Point(114, 62);
+            this.txtNomEmp.Location = new System.Drawing.Point(114, 81);
             this.txtNomEmp.Name = "txtNomEmp";
             this.txtNomEmp.Size = new System.Drawing.Size(285, 20);
             this.txtNomEmp.TabIndex = 5;
             // 
             // txtNumEmp
             // 
-            this.txtNumEmp.Location = new System.Drawing.Point(114, 21);
+            this.txtNumEmp.Location = new System.Drawing.Point(114, 40);
             this.txtNumEmp.Name = "txtNumEmp";
             this.txtNumEmp.Size = new System.Drawing.Size(127, 20);
             this.txtNumEmp.TabIndex = 4;
@@ -138,7 +150,7 @@ namespace RinkuCoppel
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(81, 106);
+            this.label4.Location = new System.Drawing.Point(81, 125);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(26, 13);
             this.label4.TabIndex = 3;
@@ -147,7 +159,7 @@ namespace RinkuCoppel
             // cmbRol
             // 
             this.cmbRol.FormattingEnabled = true;
-            this.cmbRol.Location = new System.Drawing.Point(114, 98);
+            this.cmbRol.Location = new System.Drawing.Point(114, 117);
             this.cmbRol.Name = "cmbRol";
             this.cmbRol.Size = new System.Drawing.Size(121, 21);
             this.cmbRol.TabIndex = 2;
@@ -155,7 +167,7 @@ namespace RinkuCoppel
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(22, 62);
+            this.label3.Location = new System.Drawing.Point(22, 81);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(85, 13);
             this.label3.TabIndex = 1;
@@ -164,7 +176,7 @@ namespace RinkuCoppel
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(22, 21);
+            this.label2.Location = new System.Drawing.Point(22, 40);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(85, 13);
             this.label2.TabIndex = 0;
@@ -222,5 +234,6 @@ namespace RinkuCoppel
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.Button btnGuardar;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label lbltitulo;
     }
 }

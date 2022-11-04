@@ -14,26 +14,34 @@ namespace RinkuCoppel
 {
     public partial class FormEmpleados : Form
     {
-        clsConDat scm;
-        SqlCommand SQLComm;
-        public SqlDataReader Dtr;
-        int Modo;
+        SqlCommand SQLComm;        
         string NumE;
+        int ide = 0;
         public FormEmpleados()
         {
             InitializeComponent();
+            llenarcatalogo();
             llenargrid();
+        }
+
+        private void limpiarcampos()
+        {
+            txtNomEmp.Text = "";
+            txtNumEmp.Text = "";
+            cmbRol.SelectedIndex = 0;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             panel1.Visible = true;
+            limpiarcampos();
+            lbltitulo.Text = button1.Text;
             
-            llenarcatalogo();
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
+            limpiarcampos();
             panel1.Visible = false;
         }
 
@@ -71,97 +79,68 @@ namespace RinkuCoppel
 
             dataGridView1.DataSource = dt;
             
-            //dataGridView1.Columns[0].Visible = false;
-
         }
         private void btnGuardar_Click(object sender, EventArgs e)
         {
-            
-            SqlConnection conn = new SqlConnection(clsConDat.con.ConnectionString);
-            conn.Open();
-            using (conn)
+            if (cmbRol.Text == "Sin Especificar")
             {
-                // Create a DataTable with the modified rows.  
-                //DataTable addedCategories = CategoriesDataTable.GetChanges(DataRowState.Added);
+                MessageBox.Show("Debe de Seleccionar un Rol", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                if (lbltitulo.Text == "Modificar")
+                {
+                    SqlConnection conn = new SqlConnection(clsConDat.con.ConnectionString);
+                    conn.Open();
+                    using (conn)
+                    {
 
-                // Configure the SqlCommand and SqlParameter.  
-                SqlCommand insertCommand = new SqlCommand("spGraEmpleado", conn);
-                insertCommand.CommandType = CommandType.StoredProcedure;
+                        SqlCommand UpdateCommand = new SqlCommand("spModEmpleado", conn);
+                        UpdateCommand.CommandType = CommandType.StoredProcedure;
 
-                //
-                //SqlTransaction Trans = new SqlConnection().BeginTransaction();
-                //SQLComm.Transaction = Trans;
-
-                //insertCommand.Parameters.Add
-                //insertCommand.Parameters.Add("@tpMov", SqlDbType.Int).Value = Modo;
-                insertCommand.Parameters.Add("@NumEmpleado", SqlDbType.VarChar, 50).Value = txtNumEmp.Text;
-                insertCommand.Parameters.Add("@NomEmpleado", SqlDbType.VarChar, 100).Value = txtNomEmp.Text;
-                insertCommand.Parameters.Add("@fkCatRol", SqlDbType.Int).Value = cmbRol.SelectedValue;
-                //insertCommand.Parameters.Add("@Ide", SqlDbType.Int).Value = 0;
-                //
-
-
-                //SqlParameter Param = insertCommand.Parameters.AddWithValue("@tpMov", Modo);
-
-                //insertCommand.SqlDbType = SqlDbType.Structured;
+                        UpdateCommand.Parameters.Add("@NumEmpleado", SqlDbType.VarChar, 50).Value = txtNumEmp.Text;
+                        UpdateCommand.Parameters.Add("@NomEmpleado", SqlDbType.VarChar, 100).Value = txtNomEmp.Text;
+                        UpdateCommand.Parameters.Add("@fkCatRol", SqlDbType.Int).Value = cmbRol.SelectedValue;
+                        UpdateCommand.Parameters.Add("@ide", SqlDbType.Int).Value = ide;
+                        UpdateCommand.ExecuteNonQuery();
+                    }
+                }
+                else
+                {
+                    SqlConnection conn = new SqlConnection(clsConDat.con.ConnectionString);
+                    conn.Open();
+                    using (conn)
+                    {
                 
-                // Execute the command.  
-                insertCommand.ExecuteNonQuery();
+                        SqlCommand insertCommand = new SqlCommand("spGraEmpleado", conn);
+                        insertCommand.CommandType = CommandType.StoredProcedure;
+
+                        insertCommand.Parameters.Add("@NumEmpleado", SqlDbType.VarChar, 50).Value = txtNumEmp.Text;
+                        insertCommand.Parameters.Add("@NomEmpleado", SqlDbType.VarChar, 100).Value = txtNomEmp.Text;
+                        insertCommand.Parameters.Add("@fkCatRol", SqlDbType.Int).Value = cmbRol.SelectedValue;
+                
+                        insertCommand.ExecuteNonQuery();
+                    }
+                }
+
+                llenargrid();
+                limpiarcampos();
+                panel1.Visible = false;
+
             }
-
-                //Modo = 1;
-                ////clsConDat.con.Open();
-                //SQLComm.Connection = clsConDat.con.
-                //SQLComm.Parameters.Clear();
-                ////Stored procedure para ejecutar las altas y la edición de los datos
-                //SQLComm.CommandText = "spGraEmpleado";
-                //SQLComm.CommandType = CommandType.StoredProcedure;
-
-                //SqlTransaction Trans = new SqlConnection().BeginTransaction();
-                //SQLComm.Transaction = Trans;
-
-                //try
-                //{
-
-                //    SQLComm.Parameters.Add("@tpMov", SqlDbType.Int).Value = Modo;
-                //    SQLComm.Parameters.Add("@NumEmpleado", SqlDbType.VarChar, 50).Value = txtNumEmp.Text;
-                //    SQLComm.Parameters.Add("@NomEmpleado", SqlDbType.VarChar, 100).Value = txtNomEmp.Text;
-                //    SQLComm.Parameters.Add("@fkCatRol", SqlDbType.Int).Value = cmbRol.SelectedValue;
-                //    SQLComm.Parameters.Add("@Ide", SqlDbType.Int).Value = 0;
-
-
-                //    Dtr = SQLComm.ExecuteReader(CommandBehavior.SingleRow);
-
-
-                //    Dtr.Close();
-
-                //    Trans.Commit();
-                //}
-                //catch
-                //{
-                //    Trans.Rollback();
-                //}
-                //finally
-                //{
-                //    Trans.Dispose();
-                //    SQLComm.Dispose();
-                //    clsConDat.con.Close();
-                //}
-            }
-
-    
-
-        private void dataGridView1_MouseDown(object sender, MouseEventArgs e)
-        {            
-                NumE = dataGridView1.CurrentRow.Cells[0].Value.ToString();
+            
         }
 
+    
         private void button2_Click(object sender, EventArgs e)
         {
+            panel1.Visible = true;
+            limpiarcampos();
+            lbltitulo.Text = button2.Text;
             DataTable dt = new DataTable();
             using (SqlConnection conn = new SqlConnection(clsConDat.con.ConnectionString))
             {
-                string query = "select * from vwEmpleados where [Numero Empleado] = '" + NumE + "'";
+                string query = "select * from Empleados where NumEmpleado = '" + NumE + "'";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
 
@@ -169,12 +148,23 @@ namespace RinkuCoppel
                 da.Fill(dt);
             }
 
+            
             foreach(DataRow dato in dt.Rows)
             {
+                ide = (int)dato.ItemArray[0];
                 txtNumEmp.Text = dato.ItemArray[1].ToString();
+                txtNomEmp.Text = dato.ItemArray[2].ToString();
+                cmbRol.SelectedIndex = (int)dato.ItemArray[3]-1;
             }
-            txtNumEmp.Text = dt.Columns[1].ToString();
             
+
+            
+        }
+
+        private void dataGridView1_RowEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dataGridView1.SelectedRows.Count > 0)
+                NumE = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
         }
     }
 }
