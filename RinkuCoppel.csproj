@@ -102,9 +102,27 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Resplado_BD\RinkuCoppel.bak" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Capturas_de_Pantalla\BD\EstructuraBD.png" />
+    <Content Include="Capturas_de_Pantalla\Sistema\1 Pantalla de Inicio.png" />
+    <Content Include="Capturas_de_Pantalla\Sistema\10 Reporte.png" />
+    <Content Include="Capturas_de_Pantalla\Sistema\11 Reporte.png" />
+    <Content Include="Capturas_de_Pantalla\Sistema\12 Reporte.png" />
+    <Content Include="Capturas_de_Pantalla\Sistema\2 Empleados.png" />
+    <Content Include="Capturas_de_Pantalla\Sistema\3 Empleados.png" />
+    <Content Include="Capturas_de_Pantalla\Sistema\4 Empleados.png" />
+    <Content Include="Capturas_de_Pantalla\Sistema\5 Empleados.png" />
+    <Content Include="Capturas_de_Pantalla\Sistema\6 Entregas.png" />
+    <Content Include="Capturas_de_Pantalla\Sistema\7 Entregas.png" />
+    <Content Include="Capturas_de_Pantalla\Sistema\8 Entregas.png" />
+    <Content Include="Capturas_de_Pantalla\Sistema\9 Entregas.png" />
+    <Content Include="Resplado_BD\script_Generar_RinkuCoppel.sql" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
