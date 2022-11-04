@@ -15,7 +15,7 @@ using RinkuCoppel.Clase;
  * Fecha 04/11/2022
  * Se utiliza para:
  * Agregar las Entregas realizadas por el Empleado en cada mes a la BD.
- * Modificar la iformación de las Entregas del empleado de la BD.
+ * Modificar la información de las Entregas del empleado de la BD.
  */
 
 namespace RinkuCoppel
