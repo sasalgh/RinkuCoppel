@@ -160,6 +160,7 @@ namespace RinkuCoppel
             // 
             // cmbRol
             // 
+            this.cmbRol.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbRol.FormattingEnabled = true;
             this.cmbRol.Location = new System.Drawing.Point(114, 117);
             this.cmbRol.Name = "cmbRol";

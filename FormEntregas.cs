@@ -119,7 +119,7 @@ namespace RinkuCoppel
             DataTable dt = new DataTable();
             using (SqlConnection conn = new SqlConnection(clsConDat.con.ConnectionString))
             {
-                string query = "select ide, ideEntregas, NumEmpleado as [Numero de Empleado], NomEmpleado as [Nombre del Empleado], DescRol as Rol, Mes, CantidadEntregas from vwEntregasEmpleados";
+                string query = "select ide, ideEntregas, NumEmpleado as [Numero de Empleado], NomEmpleado as [Nombre del Empleado], DescRol as Rol, Mes, CantidadEntregas from vwEntregasEmpleados order by NumEmpleado, Mes";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
 

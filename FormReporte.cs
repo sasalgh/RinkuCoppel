@@ -58,7 +58,7 @@ namespace RinkuCoppel
             DataTable dt = new DataTable();
             using (SqlConnection conn = new SqlConnection(clsConDat.con.ConnectionString))
             {
-                string query = "select * from vwReporte where Mes = '" + cmbMes.Text + "'";
+                string query = "select * from vwReporte where Mes = '" + cmbMes.Text + "' order by NumEmpleado";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
 

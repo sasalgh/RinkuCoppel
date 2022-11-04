@@ -88,7 +88,7 @@ namespace RinkuCoppel
             DataTable dt = new DataTable();
             using (SqlConnection conn = new SqlConnection(clsConDat.con.ConnectionString))
             {
-                string query = "select [Numero Empleado], [Nombre Empleado], Rol from vwEmpleados";
+                string query = "select [Numero Empleado], [Nombre Empleado], Rol from vwEmpleados order by [Numero Empleado]";
                 //string query = "select * from vwEmpleados";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
@@ -119,6 +119,7 @@ namespace RinkuCoppel
             }
             else
             {
+                
                 if (lbltitulo.Text == "Modificar")
                 {
                     SqlConnection conn = new SqlConnection(clsConDat.con.ConnectionString);
@@ -139,21 +140,28 @@ namespace RinkuCoppel
                 }
                 else
                 {
-                    SqlConnection conn = new SqlConnection(clsConDat.con.ConnectionString);
-                    conn.Open();
-                    using (conn)
+                    if (BuscarNumEmp(txtNumEmp.Text))
                     {
+                        SqlConnection conn = new SqlConnection(clsConDat.con.ConnectionString);
+                        conn.Open();
+                        using (conn)
+                        {
                 
-                        SqlCommand insertCommand = new SqlCommand("spGraEmpleado", conn);
-                        insertCommand.CommandType = CommandType.StoredProcedure;
+                            SqlCommand insertCommand = new SqlCommand("spGraEmpleado", conn);
+                            insertCommand.CommandType = CommandType.StoredProcedure;
 
-                        insertCommand.Parameters.Add("@NumEmpleado", SqlDbType.VarChar, 50).Value = txtNumEmp.Text;
-                        insertCommand.Parameters.Add("@NomEmpleado", SqlDbType.VarChar, 100).Value = txtNomEmp.Text;
-                        insertCommand.Parameters.Add("@fkCatRol", SqlDbType.Int).Value = cmbRol.SelectedValue;
+                            insertCommand.Parameters.Add("@NumEmpleado", SqlDbType.VarChar, 50).Value = txtNumEmp.Text;
+                            insertCommand.Parameters.Add("@NomEmpleado", SqlDbType.VarChar, 100).Value = txtNomEmp.Text;
+                            insertCommand.Parameters.Add("@fkCatRol", SqlDbType.Int).Value = cmbRol.SelectedValue;
                 
-                        insertCommand.ExecuteNonQuery();
+                            insertCommand.ExecuteNonQuery();
+                        }
+                        MessageBox.Show("Información Guardada", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
-                    MessageBox.Show("Información Guardada", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    else
+                    {
+                        MessageBox.Show("El Número de Empleado ya Existe en un Registro", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                 }
 
                 llenargrid();
@@ -165,8 +173,30 @@ namespace RinkuCoppel
             dataGridView1.Enabled = true;
 
         }
+                
+        private static bool BuscarNumEmp(string NE)
+        {
+            bool encon = false;
 
-    
+            DataTable dt = new DataTable();
+            using (SqlConnection conn = new SqlConnection(clsConDat.con.ConnectionString))
+            {
+                string query = "select * from Empleados where NumEmpleado = '" + NE + "'";
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
+            }
+
+
+            if (dt.Rows.Count > 0)
+                encon = false;
+            else
+                encon = true;
+            
+            return encon;
+        }
         private void button2_Click(object sender, EventArgs e)
         {
             /* Muestra el Panel que permite Modificar la información del Empleado seleccionado.
