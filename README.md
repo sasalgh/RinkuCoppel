@@ -53,6 +53,10 @@ En la carpeta Capturas_de_Pantalla se encuentran las capturas del Sistema que mu
 - Microsoft .NET Framework              4.5
 - Tipo de Aplicación					Windows Form (Escritorio)
 
+## Arquitectura
+
+Cliente - Servidor
+
 ## Versiones
 
 Se uso [GitHub] (https://github.com/) para el control de versiones.
