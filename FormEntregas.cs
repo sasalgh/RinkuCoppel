@@ -10,27 +10,40 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using RinkuCoppel.Clase;
 
+/*
+ * Desarrollador: L.I. Sandro Sarlis López
+ * Fecha 04/11/2022
+ * Se utiliza para:
+ * Agregar las Entregas realizadas por el Empleado en cada mes a la BD.
+ * Modificar la iformación de las Entregas del empleado de la BD.
+ */
+
 namespace RinkuCoppel
 {
     public partial class FormEntregas : Form
     {
+        //****** Variables globales del formulario
         string NumE;
         string ide = "";
         string ideguardar = "";
         public FormEntregas()
         {
             InitializeComponent();
+            /* Al cargar el formulario se llena el catalogo del Rol con la información de la BD.
+             * Se llena el catalogo de los meses con la información de la BD.
+             * Se llena el catalogo del Número de los Empleados con la información de la BD.
+             * Se llena el Grid con los registros que estan en la BD.
+            */
             llenarcatalogo();
             llenarMes();
             llenarNumEmp();
             llenargrid();
-
-
-            
         }
 
         private void limpiarcampos()
         {
+            //****** Limpia los campos para que cuando se vuelvan a desplegar no tengan información previamente mostrada.
+
             txtNomEmp.Text = "";
             cmbNumEmp.SelectedIndex = -1;
             cmbRol.SelectedIndex = -1;
@@ -40,6 +53,11 @@ namespace RinkuCoppel
 
         private void llenarNumEmp()
         {
+
+            /* Llena el combobox de los Numeros de empleado con la información que esta en la BD.
+             * La utilida de este combobox es que el usuario no teclee numeros de empleado, en su lugar seleccionara un numero de empleado de la lista.
+            */
+
             DataTable dt = new DataTable();
             using (SqlConnection conn = new SqlConnection(clsConDat.con.ConnectionString))
             {
@@ -57,6 +75,8 @@ namespace RinkuCoppel
         }
         private void llenarMes()
         {
+            //****** Llena el combobox de los Meses con la información que esta en el catalogo de la BD.
+
             DataTable dt = new DataTable();
             using (SqlConnection conn = new SqlConnection(clsConDat.con.ConnectionString))
             {
@@ -74,6 +94,8 @@ namespace RinkuCoppel
         }
         private void llenarcatalogo()
         {
+            //****** Llena el combobox del Rol con la información que esta en el catalogo de la BD.
+
             DataTable dt = new DataTable();
             using (SqlConnection conn = new SqlConnection(clsConDat.con.ConnectionString))
             {
@@ -92,6 +114,8 @@ namespace RinkuCoppel
 
         private void llenargrid()
         {
+            //****** Llena el Grid que sirve como Consulta, con la información de las Entregas de los Empleados, las cuales estan en la BD, utilizando la Vista vwEntregasEmpleados.
+
             DataTable dt = new DataTable();
             using (SqlConnection conn = new SqlConnection(clsConDat.con.ConnectionString))
             {
@@ -111,6 +135,8 @@ namespace RinkuCoppel
 
         private void button1_Click(object sender, EventArgs e)
         {
+            //****** Muestra el Panel que permite Agregar las Entregas por mes del Empleado
+
             panel1.Visible = true;
             limpiarcampos();
             lbltitulo.Text = button1.Text;
@@ -118,6 +144,8 @@ namespace RinkuCoppel
 
         private void cmbNumEmp_SelectedIndexChanged(object sender, EventArgs e)
         {
+            //****** Busca al Empleado en la BD utilizando el Numero de empleado seleccionado para desplegar la información del Empleado.
+             
             DataTable dt = new DataTable();
             using (SqlConnection conn = new SqlConnection(clsConDat.con.ConnectionString))
             {
@@ -140,6 +168,15 @@ namespace RinkuCoppel
 
         private void btnGuardar_Click(object sender, EventArgs e)
         {
+            /* Guarda la información de las Entregas realizadas por el Empleado en la BD.
+             * Si no se especifica una Cantidad de Entregas, se le manda un mensaje al usuario, para que lo realice.
+             * Si la Opcion elegida fue Agregar realiza un INSERT a la BD con la información de las Entregas del Empleado.
+             * Si la Opción elegida fue Modificar realiza un UPDATE a la BD con la nueva información de las Entregas del Empleado seleccionado.
+             * Los campos son enviados como parametros a los Procedimientos Almacenados que estan en la BD.
+             * spModEntrega es utilizado para realizar UPDATE.
+             * spGraEntrega es utilizado para realizar INSERT.
+            */
+
             if (txtCantEnt.Text == "")
             {
                 MessageBox.Show("La cantidad de Entrega es requerida", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -193,6 +230,8 @@ namespace RinkuCoppel
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
+            //****** Oculta el Panel que permite Agregar o Modificar la información de las Entregas del Empleado, no permitiendo guardar.
+
             limpiarcampos();
             panel1.Visible = false;
         }
@@ -200,6 +239,10 @@ namespace RinkuCoppel
         
         private void dataGridView1_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
+            /* Guarda en la variable Global NumE el valor del Numero de empleado que esta en la celda de este campo correspondiente a la fila seleccionado con doble Clic
+             * Guarda en la variable Global ide el valor del ide de la tabla "EntregasEmpleados".
+            */
+
             if (dataGridView1.SelectedRows.Count > 0)
             {
                 NumE = dataGridView1.SelectedRows[0].Cells[2].Value.ToString();
@@ -210,6 +253,11 @@ namespace RinkuCoppel
 
         private void button2_Click(object sender, EventArgs e)
         {
+            /* Muestra el Panel que permite Modificar la información de las Entregas del Empleado seleccionado.
+             * Busca al Empleado en la BD utilizando el Numero de empleado para desplegar la información del Empleado.
+             * Tambien utiliza el ide de la tabla "EntregasEmpleados" para desplegar la información de las Entregas del Empleado.
+            */
+
             if (NumE == null)
                 MessageBox.Show("Seleccione un Registro para Modificar.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
             else
@@ -258,12 +306,16 @@ namespace RinkuCoppel
 
         private void dataGridView1_CellToolTipTextNeeded(object sender, DataGridViewCellToolTipTextNeededEventArgs e)
         {
+            //****** Se Agrega un Tooltip en el Grid para que sea mostrado cuando el cursor pase sobre el Grid.
+
             if ((e.ColumnIndex > -1) && (e.RowIndex > -1))                
                 e.ToolTipText = "Para Modificar un registro dar dos clics en la primer columna del renglón.";
         }
 
         private void button1_MouseHover(object sender, EventArgs e)
         {
+            //****** Agrega un Tooltip en el Boton "Agregar" para que sea mostrado cuando el cursor pase sobre el Boton.
+
             ToolTip ttpict = new ToolTip();
             ttpict.AutoPopDelay = 10000;
             ttpict.InitialDelay = 300;
@@ -274,6 +326,8 @@ namespace RinkuCoppel
 
         private void button2_MouseHover(object sender, EventArgs e)
         {
+            //****** Agrega un Tooltip en el Boton "Modificar" para que sea mostrado cuando el cursor pase sobre el Boton.
+
             ToolTip ttpict = new ToolTip();
             ttpict.AutoPopDelay = 10000;
             ttpict.InitialDelay = 300;

@@ -10,6 +10,14 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using RinkuCoppel.Clase;
 
+/*
+ * Desarrollador: L.I. Sandro Sarlis López
+ * Fecha 04/11/2022
+ * Se utiliza para:
+ * Consultar la Información mensual de cada Empleado, mostrando:
+ * Horas Trabajadas, Pago Total por Entregas, Pago Total por Bonos, Retenciones, Vales y Sueldo Total.
+ */
+
 namespace RinkuCoppel
 {
     public partial class FormReporte : Form
@@ -18,11 +26,12 @@ namespace RinkuCoppel
         {
             InitializeComponent();
             llenarMes();
-            //llenargrid();
         }
 
         private void llenarMes()
         {
+            //****** Llena el combobox de los Meses con la información que esta en el catalogo de la BD.
+
             DataTable dt = new DataTable();
             using (SqlConnection conn = new SqlConnection(clsConDat.con.ConnectionString))
             {
@@ -42,11 +51,14 @@ namespace RinkuCoppel
         }
         private void llenargrid()
         {
+            /* Llena el Grid que sirve como Consulta, con la información de los Pagos y Retenciones de los Empleados, la cual esta en la BD, utilizando la Vista vwReporte
+             * La cual de las vistas: vwPagos, vwRetenciones, vwSdoMensual_Vales.
+            */
+
             DataTable dt = new DataTable();
             using (SqlConnection conn = new SqlConnection(clsConDat.con.ConnectionString))
             {
                 string query = "select * from vwReporte where Mes = '" + cmbMes.Text + "'";
-                //string query = "select * from vwEmpleados";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
 
@@ -62,6 +74,8 @@ namespace RinkuCoppel
 
         private void cmbMes_SelectedIndexChanged(object sender, EventArgs e)
         {
+            //****** Al seleccionar un Mes de la lista llena el Grid.
+
             llenargrid();
         }
     }

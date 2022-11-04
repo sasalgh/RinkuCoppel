@@ -10,21 +10,32 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using RinkuCoppel.Clase;
 
+/*
+ * Desarrollador: L.I. Sandro Sarlis López
+ * Fecha 04/11/2022
+ * Se utiliza para:
+ * Agregar un Nuevo Empleado a la BD.
+ * Modificar la iformación del empleado de la BD.
+ */
+
 namespace RinkuCoppel
 {
     public partial class FormEmpleados : Form
     {
+        //****** Variables globales del formulario
         string NumE;
         int ide = 0;
         public FormEmpleados()
         {
             InitializeComponent();
+            //****** Al cargar el formulario se llena el catalogo del Rol con la información de la BD y el Grid se llena con los registros que estan en la BD.
             llenarcatalogo();
             llenargrid();
         }
 
         private void limpiarcampos()
         {
+            //****** Limpia los campos para que cuando se vuelvan a desplegar no tengan información previamente mostrada.
             txtNomEmp.Text = "";
             txtNumEmp.Text = "";
             cmbRol.SelectedIndex = 0;
@@ -32,6 +43,8 @@ namespace RinkuCoppel
 
         private void button1_Click(object sender, EventArgs e)
         {
+            //****** Muestra el Panel que permite Agregar a un nuevo Empleado
+
             dataGridView1.Enabled = false;
             panel1.Visible = true;
             limpiarcampos();
@@ -41,6 +54,8 @@ namespace RinkuCoppel
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
+            //****** Oculta el Panel que permite Agregar o Modificar la información del Empleado, no permitiendo guardar.
+
             limpiarcampos();
             panel1.Visible = false;
             dataGridView1.Enabled = true;
@@ -48,6 +63,8 @@ namespace RinkuCoppel
 
         private void llenarcatalogo()
         {
+            //****** Llena el combobox del Rol con la información que esta en el catalogo de la BD.
+
             DataTable dt = new DataTable();
             using (SqlConnection conn = new SqlConnection(clsConDat.con.ConnectionString))
             {
@@ -66,6 +83,8 @@ namespace RinkuCoppel
 
         private void llenargrid()
         {
+            //****** Llena el Grid que sirve como Consulta, con la información de los Empleados, la cual esta en la BD, utilizando la Vista vwEmpleados
+
             DataTable dt = new DataTable();
             using (SqlConnection conn = new SqlConnection(clsConDat.con.ConnectionString))
             {
@@ -83,6 +102,15 @@ namespace RinkuCoppel
         }
         private void btnGuardar_Click(object sender, EventArgs e)
         {
+            /* Guarda la información del Empleado en la BD.
+             * Si no se especifica un Rol, se le manda un mensaje al usuario, para que lo realice.
+             * Si la Opcion elegida fue Agregar realiza un INSERT a la BD con la información del nuevo Empleado.
+             * Si la Opción elegida fue Modificar realiza un UPDATE a la BD con la nueva información del Empleado seleccionado.
+             * Los campos son enviados como parametros a los Procedimientos Almacenados que estan en la BD.
+             * spModEmpleado es utilizado para realizar UPDATE.
+             * spGraEmpleado es utilizado para realizar INSERT.
+            */
+
             dataGridView1.Enabled = false;
 
             if (cmbRol.Text == "Sin Especificar")
@@ -141,6 +169,10 @@ namespace RinkuCoppel
     
         private void button2_Click(object sender, EventArgs e)
         {
+            /* Muestra el Panel que permite Modificar la información del Empleado seleccionado.
+             * Busca al Empleado en la BD utilizando el Numero de empleado para desplegar la información que podra ser modificada.
+            */
+
             dataGridView1.Enabled = false;
 
             if (NumE == null)
@@ -176,18 +208,24 @@ namespace RinkuCoppel
 
         private void dataGridView1_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
+            //****** Guarda en la variable Global NumE el valor del Numero de empleado que esta en la celda de este campo correspondiente a la fila seleccionado con doble Clic
+
             if (dataGridView1.SelectedRows.Count > 0)
                 NumE = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
         }
 
         private void dataGridView1_CellToolTipTextNeeded(object sender, DataGridViewCellToolTipTextNeededEventArgs e)
         {
+            //****** Se Agrega un Tooltip en el Grid para que sea mostrado cuando el cursor pase sobre el Grid.
+
                 if ((e.ColumnIndex > -1) && (e.RowIndex > -1))
                     e.ToolTipText = "Para Modificar un registro dar dos clics en la primer columna del renglón.";
         }
 
         private void button1_MouseHover(object sender, EventArgs e)
         {
+            //****** Agrega un Tooltip en el Boton "Agregar" para que sea mostrado cuando el cursor pase sobre el Boton.
+
             ToolTip ttpict = new ToolTip();
             ttpict.AutoPopDelay = 10000;
             ttpict.InitialDelay = 300;
@@ -198,6 +236,8 @@ namespace RinkuCoppel
 
         private void button2_MouseHover(object sender, EventArgs e)
         {
+            //****** Agrega un Tooltip en el Boton "Modificar" para que sea mostrado cuando el cursor pase sobre el Boton.
+
             ToolTip ttpict = new ToolTip();
             ttpict.AutoPopDelay = 10000;
             ttpict.InitialDelay = 300;
