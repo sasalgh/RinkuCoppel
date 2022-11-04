@@ -9,3 +9,4 @@ C:\TEMPURA\RinkuCoppel\obj\Debug\RinkuCoppel.exe
 C:\TEMPURA\RinkuCoppel\obj\Debug\RinkuCoppel.pdb
 C:\TEMPURA\RinkuCoppel\obj\Debug\RinkuCoppel.MenuPrincipal.resources
 C:\TEMPURA\RinkuCoppel\obj\Debug\RinkuCoppel.FormEmpleados.resources
+C:\TEMPURA\RinkuCoppel\obj\Debug\RinkuCoppel.FormEntregas.resources

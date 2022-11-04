@@ -58,6 +58,12 @@
     <Compile Include="FormEmpleados.Designer.cs">
       <DependentUpon>FormEmpleados.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormEntregas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormEntregas.Designer.cs">
+      <DependentUpon>FormEntregas.cs</DependentUpon>
+    </Compile>
     <Compile Include="MenuPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -68,6 +74,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormEmpleados.resx">
       <DependentUpon>FormEmpleados.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormEntregas.resx">
+      <DependentUpon>FormEntregas.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MenuPrincipal.resx">
       <DependentUpon>MenuPrincipal.cs</DependentUpon>
